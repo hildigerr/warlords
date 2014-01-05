@@ -195,8 +195,11 @@ bool update_table( IODAT* data )
         slicer += 15;
     }/* End Player Qt For */
 
+// #define PLAY_NICE
+#ifdef PLAY_NICE
     /* HACK: XXX Fix needed to work with another student's silly server XXX */
     if(( data->output.buf[97] == 'a' )&&( !strcmp( my_name, &data->output.buf[100] ) )) is_myturn = true;
+#endif
 
     /* Set Up Table GUI Area */
     if( iam_playing ) --qt;
