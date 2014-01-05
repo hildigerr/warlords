@@ -16,11 +16,7 @@ Having passed a player is not allowed to play until the table is reset. This occ
 
 [TODO: finish gameplay explanation]
 
-type  
-- - -
-	make
-read  
-- - -
-	man ./warlords.6
+
+read man ./warlords.6
 
 auto_cli.exp is an tcl script using expect and telnet to connect to a server and play poorly.
