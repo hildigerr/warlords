@@ -1,6 +1,6 @@
-warlords
+Warlords and Scumbags
 ========
-Warlords and Scumbags card game server and client.
+ This provides a client and server for the card game.  
 Created for CSCI 367 Networking Class at WWU Fall 2013.
 
 
@@ -16,9 +16,11 @@ Having passed a player is not allowed to play until the table is reset. This occ
 
 [TODO: finish gameplay explanation]
 
-type
+type  
+- - -
 	make
-read
+read  
+- - -
 	man ./warlords.6
 
 auto_cli.exp is an tcl script using expect and telnet to connect to a server and play poorly.
