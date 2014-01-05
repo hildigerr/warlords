@@ -1,0 +1,130 @@
+.TH WARLORDS 6 2013-12-02
+.SH NAME
+warlords-server \- The game server.
+.P
+warlords-client \- The game client.
+.SH SYNOPSIS
+.B warlords-server
+[-t timeout] [-m min_qt] [-l lobby_timeout]
+.P
+.B warlords-client
+[-s server] [-p port] [-n name] [-m]
+.SH DESCRIPTION
+.B Server Options:
+.IP -t
+Timeout before clients have taken too long to play. The default is 15 seconds.
+If more than 3 minutes are requested, the default will be used.
+.IP -m
+Minimum quantity of players before a game may begin.
+Default is 3, this is the minimum minimum.
+No more than 7 players can play;
+If more than 7 is requested as the minimum, then the default will be used.
+Range: [3,5].
+.IP -l
+Timeout before a game begins once the minimum has been reached.
+The default is 15 seconds.
+If more than 3 minutes are requested, the default will be used.
+.IP -g
+Use curses gui. Displays more information for an active server
+administrator to interact with the game in progress.
+.P
+.B Client Options:
+.IP -s
+IP or DNS name for the server to connect to. Default is "localhost".
+.IP -p
+The port to use for connecting to the server. Default is 36737.
+If a number less than 36700 is requested then 36700 will be added to it.
+This way you can connect to another server in the WWU CSCI367 class using only the student's book number.
+.IP -n
+The name to use for your player. The default is my last name: "Vergaray".
+Requests for names less than the default length will be ignored.
+You must padd the end with spaces in this case. If the name is too long it will be truncated.
+.IP -m
+Manual mode. Allows human interaction mode. Auto-play is the default.
+.SH Client Manual Mode
+player must click "play" button to join.
+You can also send, messages to the server using the correct protocol in the chat bar.
+For example: type "[chand]" as a chat message at any time to request the server to send you your hand.
+WARNING: You are responsible for propper timing and formatting of your direct messages.
+Without the beginning '[', the client will send whatever you type as a chat message.
+.SH Server GUI Mode
+You are shown an interface with 3 major sections.
+The top section displays information about the players at the table:
+.P
+NAME [ix] S: 3 4 5 6 7 8 9 0 J Q K A 2 (TT) Score Strikes [Hands: ]
+.P
+Name, index (player id), Status, the quantity of cards in each rank
+and the total number of cards held by a player.
+As well as, a score calculated by giving warlords +1 and scumbags -1 at the
+beginning of each hand. This gets incremented at the same time as they are asked
+to swap cards.
+The number of strikes a player at the table has, is shown, as well as a list of the
+strike codes they recieved. Finally the number of hands the player has taken part in
+is shown last. In the top right corner, the total quantity of hands completed by the
+server is tracked.
+.P
+The middle area--in a box--is the lobby.
+For now it's just a list of names separated by commas.
+.P
+The largest section is given for watching chat messages and reciving messages from
+the server as you type commands.
+.P
+To use
+.B Server Commands
+begin with either a forward or a backward slash.
+Commands which affect individual players always require the player's index (the player id) as the first parameter.
+See Known Bugs below for usage idiosyncrasies, to avoid experienceing unexpected behavior.
+.IP /b i
+Slash-b is the command for banning a player from chat. A notification will be
+sent to all players, and the banned player will recieve strikes for further chat attempts.
+.IP /c msg
+Slash-c is for broadcasting chat messages from the server administrator.
+.IP /f i
+Slah-f is to forgive a player one strike.
+.IP /k i
+Slash-k will kick a client from being connected to the server.
+.IP /s i xx
+Slash-s is the command for striking a player. You can give any player a strike
+for any reason any time.
+It requires two parameters, first, the index of the player (the player id), as ususal.
+Followed by the two-digit strike code to send to them.
+.IP /u i
+Slash-u is the counterpart of Slash-b. It will un-ban the player from chat.
+.IP /w i msg
+Slash-w is for whisper. This sends a chat message only to the specified client.
+TODO: Allow clients this ability. & Show them in SGUI. Colorize them in both UIs.
+.IP /X
+Slash-X will shutdown the server. CTRL-C works as well.
+.SH NOTES
+This game was created for the CSCI367 Networking Class at WWU.
+.P
+A matter of some debate in class was the inclusion of the trump cards in table messages.
+This server sends the table showing the trump play for the client's GUI.
+The automated client doesn't care, but a human player might get confused
+by another server which never shows a two being played.
+.SH KNOWN BUGS
+Not everything planned has been implemented:
+gtk menu for the client,
+advanced ai,
+different warlord/scumbag images with nametags.
+Grep TODO for more.
+.P
+.B Temporary Lobby Overpopulation
+Connect 3 clients. Kill 2 of them simultaneously. Remaining player is enqueued to lobby twice.
+Join another: Server thinks there's enough players and begins a game.
+Then, it realizes the duplicate and re-enqueues players.
+.P
+.B Timeout Confusion
+Lobby timeout duration expected between hands, but error timeout duration is behavior.
+.P
+.B Full Lobby Garbage Entry
+In the client, when the lobby is full--possibly before--garbage is appended in place of the last players name.
+This is probably due to reaching beyond the valid portion of the array.
+.P
+.B SGUI Command Line
+Typing a command during play of a hand will halt play until finished.
+If typing a command between hands, when a hand starts,
+partially input commands will be interupted and forced to attempt to execute.
+For now this is silently ignored, and the command must be retyped.
+FIX IDEA: halt SIGALARM for duration of stdin input. ?
+Or, use raw input with arrowkeys and highlighting to use command sequences rather than command line.

@@ -1,0 +1,99 @@
+#!/usr/bin/expect --
+# $Id: auto_cli.exp,v 1.12 2013/12/05 19:38:58 moonsdad Exp $
+#TODO:make try again on all strikes
+
+set timeout -1
+
+proc swap {} {
+    set need_bugfix 1
+    while { $need_bugfix == 1 } {
+        send "\[chand]\r";
+        expect {
+                "shand*]" {
+                    set hand [string range "$expect_out(0,string)" 6 58]
+                    set need_bugfix 0
+            }   "strik"
+        }
+    }
+    puts "\n\nI am Warlord! (Swaping)\n\n" ;#BARF
+    set hand [split $hand ","]
+    send "\[cswap|[lindex $hand 0]]\r"
+}
+
+proc play {cards} {
+    set need_bugfix 1
+    while { $need_bugfix == 1 } {
+        send "\[chand]\r";
+        expect {
+                "shand*]" {
+                    set hand [string range "$expect_out(0,string)" 6 58]
+                    set need_bugfix 0
+            }   "strik"
+        }
+    }
+    puts "\n\nMY TURN:\n$cards\n$hand\n" ;#BARF
+    set cards [split $cards ","] ; set hand [split $hand ","]
+    set tableqt [lsearch $cards "52"]
+    switch -- $tableqt {
+          0 {
+            foreach card $hand {
+                if { $card < 52 } {
+                    send "\[cplay|$card:52:52:52]\r"
+                    break
+                }
+            }
+        } 1 {
+            foreach card $hand {
+                if { $card > [lindex $cards 0]} {
+                    send "\[cplay|$card:52:52:52]\r"
+                    break
+                }
+            }
+        } default {
+            send "\[cplay|52:52:52:52]\r"
+        }
+    }
+}
+
+set argc [llength $argv]
+if { $argc > 0 } {
+    set server [lindex $argv 0]
+} else { set server "localhost" }
+if { $argc > 1 } {
+    set portno [lindex $argv 1]
+} else { set portno "36737" }
+
+#spawn telnet cf416-03.cs.wwu.edu 36714
+#spawn telnet cf416-10.cs.wwu.edu 50001
+spawn telnet $server $portno
+expect {
+    "Connected" { send {[cjoin|expectre]} ; send "\r" }
+    "refused"   { exit }
+}
+
+expect "sjoin?\[a-zA-Z_]\[0-9a-zA-Z_ ]*]\\\["  {
+	set myname [string range "$expect_out(0,string)" 6 13]
+	puts "\nMy name is : <$myname>\n" ;#BARF
+}
+
+# expect "shand*\\\[" {
+#     set hand [string range "$expect_out(0,string)" 6 58]
+# }
+
+while 1 {
+    expect {
+        "Connection closed" { exit }
+        "swapw" { swap }
+        "stabl*a??$myname*]" {
+            set len [string length  "$expect_out(0,string)"]
+            set first [expr $len - 14]
+            set last [expr $len - 4]
+            set cards [string range "$expect_out(0,string)" $first $last]
+            play $cards ;#$hand
+#            send "\[chand]\r";
+#             expect "shand*\\\[" {
+#                 set hand [string range "$expect_out(0,string)" 6 58]
+#             }
+        }
+    }
+}
