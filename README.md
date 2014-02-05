@@ -2,7 +2,7 @@ Warlords and Scumbags
 ========
  This provides a client and server for the card game.  
 Created for CSCI 367 Networking Class at WWU Fall 2013.
-
+It is available for installation via my ppa <https://launchpad.net/~moonsdad/+archive/ppa>
 
 Warlords and Scumbags is a card game in which three to seven players race to get rid of all the cards in their hand in order to become the Warlord of the next round. The last player who still has cards in his or her hand is the Scumbag and must give the Warlord his or her highest card, in exchange for any card the Warlord selects, before play commences after the deal.
 

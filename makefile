@@ -1,4 +1,4 @@
-# $Id: makefile,v 1.18 2013/12/09 19:40:13 moonsdad Exp $
+# $Id: makefile,v 1.19 2014/02/05 21:53:19 moonsdad Exp $
 
 CC = gcc
 CFLAGS = -g -Wall
@@ -19,10 +19,15 @@ client : ${CLI_SRCS}
 	${CC} ${CFLAGS} ${CLI_SRCS} -o warlords-${@} ${CCONF}
 
 man: warlords.6
-	gzip -c warlords.6 > warlords.6.gz
+	@ gzip -c warlords.6 > warlords.6.gz
 
-clean:
-	rm warlords-server warlords-client
+install: all man
+	@ mv warlords-client ${DESTDIR}/usr/bin/
+	@ mv warlords-server ${DESTDIR}/usr/bin/
+	@ cp auto_cli.exp ${DESTDIR}/usr/bin/warlords-auto
+	@ mv warlords.6.gz ${DESTDIR}/usr/share/man/man6/
+	@ mv 13031717912126086382istockphoto_6922629-wild-joker-in-a-deck-of-cards-th.png \
+	  ${DESTDIR}/usr/share/icons/warscum.png
 
 ${SRV_SRCS} : ${BASE_HED} sgui.h server.h
 ${CLI_SRCS} : ${BASE_HED} client.h warlord_ai.h

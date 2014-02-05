@@ -1,4 +1,4 @@
-/* $Id: warlords.c,v 1.45 2013/12/05 04:01:58 moonsdad Exp $ */
+/* $Id: warlords.c,v 1.46 2014/02/05 21:53:19 moonsdad Exp $ */
 
 
 /******************************************************************************
@@ -24,7 +24,8 @@ int main( int argc, char **argv )
 
     /* GTK Variables */
     const gchar* title = "Warlords and Skumbags";
-    const gchar* icon = "./dat/img/13031717912126086382istockphoto_6922629-wild-joker-in-a-deck-of-cards-th.png";
+    const gchar* icon = //"./dat/img/13031717912126086382istockphoto_6922629-wild-joker-in-a-deck-of-cards-th.png";
+        "/usr/share/icons/warscum.png";
     gchar* tplist_coltitle[LIST_COL_QT] = { "STATUS", "NAME", "CARDS" };
     GIOChannel* Sd;
     GtkWidget* widget[MAX_WIDGETS]; /* WARNING: Beware the difference between *
