@@ -2,7 +2,3 @@
 */CVS/*
 .cvsignore
 */.cvsignore
-bug.db
-cvstags.txt
-dat/log/*
-*.gz
