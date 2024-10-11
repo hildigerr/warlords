@@ -1,7 +1,7 @@
-# $Id: makefile,v 1.19 2014/02/05 21:53:19 moonsdad Exp $
+# $Id: makefile,v 1.19 2014/02/05 21:53:19 hildigerr Exp $
 
 CC = gcc
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -std=gnu89
 CCONF = `pkg-config --cflags --libs gtk+-2.0`
 SLINK = -lpcre -lncurses
 

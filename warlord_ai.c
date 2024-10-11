@@ -1,4 +1,4 @@
-/* $Id: warlord_ai.c,v 1.5 2013/12/03 05:47:23 moonsdad Exp $*/
+/* $Id: warlord_ai.c,v 1.5 2013/12/03 05:47:23 hildigerr Exp $*/
 
 /******************************************************************************
  * Warlords And Scumbags                                                      *

@@ -1,8 +1,8 @@
-/* $Id: rmhv_stdlib.h,v 1.12 2013/12/07 19:03:18 moonsdad Exp $ */
+/* $Id: rmhv_stdlib.h,v 1.12 2013/12/07 19:03:18 hildigerr Exp $ */
 
 /******************************************************************************
  *                             rmhv_stdlib.h                                  *
- * Created by:      Roberto Morrel HildigerR Vergaray <moonsdad@gmail.com>    *
+ * Created by:      Roberto Morrel HildigerR Vergaray                         *
  *                                                                            *
  * Modified for use in CSCI 637 @ WWU -- Fall 2013                            *
  *                                                                            *

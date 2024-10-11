@@ -1,4 +1,4 @@
-/* $Id: cardplay.c,v 1.40 2013/12/09 15:38:34 moonsdad Exp $ */
+/* $Id: cardplay.c,v 1.40 2013/12/09 15:38:34 hildigerr Exp $ */
 
 #include "sgui.h" /* #includes "server.h" */
 
